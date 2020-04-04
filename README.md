@@ -33,7 +33,7 @@ Para a execução da aplicação será necessario ter instalado em sua máquina:
 
 ## Instalação
 
-Será necessario realizar o seguinte comando dentro do diretório ```backend``` e ``frontend` para a instalação de todas as dependências necessarias:
+Será necessario realizar o seguinte comando dentro do diretório ```backend``` e ``frontend`` para a instalação de todas as dependências necessarias:
 
 Caso esteja utilizando NPM:
 
