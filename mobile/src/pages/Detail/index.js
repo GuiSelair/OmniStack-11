@@ -2,7 +2,7 @@
 import React from "react"
 import { View, Image, Text, TouchableOpacity, FlatList, Linking } from "react-native"
 import { Feather } from "@expo/vector-icons"
-import { useNavigation } from "@react-navigation/native"
+import { useNavigation, useRoute } from "@react-navigation/native"
 import * as MailComposer from "expo-mail-composer"
 
 
@@ -12,7 +12,10 @@ import styles from "./styles"
 
 export default function Detail(){
     const navigation = useNavigation()
-    const message = "Olá APAD, estou entrando em contato pois gostaria de ajudar no caso 'Cadelinha atropelada' com o valor de R$300,00"
+    const route = useRoute();
+    const incident = route.params.incident; 
+    console.log(incident)
+    const message = `Olá ${incident.name}, estou entrando em contato pois gostaria de ajudar no caso ${incident.title} com o valor de R$${incident.value},00`
 
     function navigateBack() {
         navigation.goBack()
@@ -20,14 +23,14 @@ export default function Detail(){
 
     function sendMail(){
         MailComposer.composeAsync({
-            subject: "Herói do caso: Cadelinha atropelada",
-            recipients: ["guilherme@hotmail.com"],
+            subject: `Herói do caso: ${incident.title}`,
+            recipients: [incident.email],
             body: message
         })
     }
 
     function sendWhatsapp(){
-        Linking.openURL(`whatsapp://send?phone=992174545&text=${message}`)
+        Linking.openURL(`whatsapp://send?phone=5555992226262&text=${message}`)
     }
 
 
@@ -42,13 +45,13 @@ export default function Detail(){
 
             <View style={styles.incident}>
                 <Text style={[styles.incidentProperty, { marginTop: 0 }]}>ONG:</Text>
-                <Text style={styles.incidentValue}>APAD</Text>
+                <Text style={styles.incidentValue}>{incident.name} de {incident.city}/{incident.uf}</Text>
                 
                 <Text style={styles.incidentProperty}>CASO:</Text>
-                <Text style={styles.incidentValue}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris scelerisque urna ac arcu condimentum egestas. Vivamus fringilla, urna eu luctus suscipit, massa erat aliquam magna, vel bibendum nisl dolor ac risus. </Text>
+                <Text style={styles.incidentValue}>{incident.description}</Text>
                 
                 <Text style={styles.incidentProperty}>VALOR:</Text>
-                <Text style={styles.incidentValue}>R$ 330,00</Text>   
+                <Text style={styles.incidentValue}>R${incident.value},00</Text>   
             </View>
             <View style={styles.contactBox}>
                 <Text style={styles.heroTitle}>Salve o dia!</Text>
